@@ -1,5 +1,7 @@
 extends Area2D
 
+signal picked;
+signal hurt;
 
 var velocidad = Vector2.ZERO;
 var speed = 350;
@@ -41,3 +43,7 @@ func process_animation():
 			$AnimatedSprite2D.flip_h = false;
 	else:
 		$AnimatedSprite2D.play("caminar");
+		
+func game_overPlayer():
+	set_process(false);
+	#AnimatedSprite2D.animation = "quieto" que hace que descanse

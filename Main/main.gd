@@ -33,6 +33,7 @@ func _ready():
 	scrensize = get_viewport_rect().size
 	
 	generar_Moneda();
+	generarmonedaTime();
 	
 func timer_opciones():
 	GameOverTimer.wait_time=3
@@ -44,7 +45,7 @@ func _onGameOverTimer_timeout():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if $contenedor.get_child_count()==0:
+	if $contenedor.get_child_count() == 0:
 		level+=1
 		tiemleft+=5
 		generar_Moneda()
@@ -78,17 +79,18 @@ func gameOver():
 	$Player.game_overPlayer()
 	GameOverTimer.start()
 	
-func generarnitroTime():
-	$nitroTimer.wait_time=IntervalTweener
-	$nitroTimer
+func generarmonedaTime():
+	var interval = randf_range(5,10);
+	$MonedaTimer.wait_time=interval
+	$MonedaTimer.start()
 
-func on_nitro_timer_timeout():
-	$nitroTimer.stop()
+func _on_moneda_timer_timeout():
+	$MonedaTimer.stop()
 	var moneda=moneda.instantiate()
-	moneda.pasition.x=randf_range(25, 1000)
-	moneda.position.y=randf_range(25, 600)
+	moneda.pasition.x=randf_range(25, 850)
+	moneda.position.y=randf_range(25, 550)
 	$contenedor.add_child(moneda)
-	generarnitroTime()
+	generarmonedaTime()
 	
 func _on_player_hurt():
 	print("Entre a la selñal hurt")
@@ -100,3 +102,6 @@ func _on_game_timer_timeout():
 	$HUD.modificar_tiempo(tiemleft)
 	if tiemleft<=0:
 		gameOver()
+
+
+
